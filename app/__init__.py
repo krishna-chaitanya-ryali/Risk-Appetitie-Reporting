@@ -1,4 +1,6 @@
 import cx_Oracle
+from flask import Flask
+
 cx_Oracle.init_oracle_client('')
 
 app = Flask(__name__, static_folder ='static')

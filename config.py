@@ -2,13 +2,13 @@ import os
 from datetime import timedelta
 
 #Database Information
-conf_userName = ''
-conf_password = ''
-conf_hostName = ''
-conf_serviceName = ''
-conf_port = ''
-conf_dialect = ''
-conf_sqldriver = ''
+conf_userName = 'sys'
+conf_password = 'Welcome_123'
+conf_hostName = 'localhost'
+conf_serviceName = 'orcl'
+conf_port = '1521'
+conf_dialect = 'oracle'
+conf_sqldriver = 'cx_oracle'
 
 #user paths
 

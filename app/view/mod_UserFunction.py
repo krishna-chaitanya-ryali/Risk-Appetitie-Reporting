@@ -23,4 +23,45 @@ userfunction = Blueprint("userfunction", __name__)
 
 class rapdb():
     def __init__(self):
-        self.dsn_tns = cx_Oracle.makedsn(conf_hostName, conf_port, service_name=conf_serviceName)
+
+
+        self.__con = cx_Oracle.connect(user=conf_userName, password=conf_password, dsn=self.dsn_tns,
+                                       encoding="UTF-8", nencoding="UTF-8")
+        self.__cursor = self.__con.cursor()
+
+    def get_data(self, SqlQry, parm):
+        try:
+            l_cur = self.__cursor.var(cx_Oracle.CURSOR)
+            self.__cursor.execute(SqlQry, parm)
+            return self.__cursor
+        except cx_Oracle.DataError as e:
+            log_error.error("Error | mod_userfunction | get_data Cls" + str(e))
+
+def sql_getData(a, b=[], qryOption=''):
+    try:
+        SqlQry = QueryString[a]['Qstring'] + qryOption
+        Db_Con = rapdb()
+
+        print("-inside sql_get data")
+        print(SqlQry)
+
+        allrecs = Db_Con.get_data(SqlQry, b)
+        print(allrecs)
+        colname = [desc[0] for desc in allrecs.description]
+
+        vResult = []
+
+        if not allrecs is None:
+            for row in allrecs:
+                vRecs = {}
+                for i in range(len(colname)):
+                    vRecs.update({colname[i]:row[i]})
+                vResult.append(vRecs)
+
+        Db_Con.endconnection()
+        return  vResult
+
+    except Exception as e:
+        print("sql_getdata")
+        print(e)
+        return -1
