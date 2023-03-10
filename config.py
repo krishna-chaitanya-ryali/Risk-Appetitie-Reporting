@@ -2,10 +2,10 @@ import os
 from datetime import timedelta
 
 #Database Information
-conf_userName = 'sys'
-conf_password = 'Welcome_123'
+conf_userName = 'system'
+conf_password = 'system'
 conf_hostName = 'localhost'
-conf_serviceName = 'orcl'
+conf_serviceName = 'orclpdb'
 conf_port = '1521'
 conf_dialect = 'oracle'
 conf_sqldriver = 'cx_oracle'

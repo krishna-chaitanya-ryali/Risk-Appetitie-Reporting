@@ -24,7 +24,7 @@ userfunction = Blueprint("userfunction", __name__)
 class rapdb():
     def __init__(self):
 
-
+        self.dsn_tns = cx_Oracle.makedsn(conf_hostName, conf_port, service_name = conf_serviceName)
         self.__con = cx_Oracle.connect(user=conf_userName, password=conf_password, dsn=self.dsn_tns,
                                        encoding="UTF-8", nencoding="UTF-8")
         self.__cursor = self.__con.cursor()
@@ -36,6 +36,9 @@ class rapdb():
             return self.__cursor
         except cx_Oracle.DataError as e:
             log_error.error("Error | mod_userfunction | get_data Cls" + str(e))
+
+    def endconnection(self):
+        self.__con.close()
 
 def sql_getData(a, b=[], qryOption=''):
     try:
@@ -65,3 +68,17 @@ def sql_getData(a, b=[], qryOption=''):
         print("sql_getdata")
         print(e)
         return -1
+
+def get_news_data():
+    try:
+        get_data = sql_getData(1)
+        return get_data
+
+    except Exception as e:
+        return 'ERROR'
+
+def checkmyaccess(htmlpage):
+    try:
+        return render_template(htmlpage)
+    except Exception as e:
+        log_error.error('mod_userfunction | checkmyaccess | ' + str(e))
